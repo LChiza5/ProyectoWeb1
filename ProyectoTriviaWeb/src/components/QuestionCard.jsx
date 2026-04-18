@@ -1,3 +1,7 @@
-export default function QuestionCard() {
-  return <div>QuestionCard</div>;
+export default function QuestionCard({ textoPregunta }) {
+  return (
+    <div>
+      <p>{textoPregunta}</p>
+    </div>
+  );
 }
