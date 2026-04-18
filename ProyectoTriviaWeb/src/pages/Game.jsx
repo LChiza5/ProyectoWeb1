@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const URL_API = "https://the-trivia-api.com/v2/questions?limit=10";
+export default function Game() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-export default function Juego() {
+  const categoria = location.state?.categoria || "history";
+  const dificultad = location.state?.dificultad || "easy";
+
+  const URL_API = `https://the-trivia-api.com/v2/questions?limit=10&categories=${categoria}&difficulty=${dificultad}`;
+
   const [preguntas, setPreguntas] = useState([]);
   const [indiceActual, setIndiceActual] = useState(0);
   const [puntaje, setPuntaje] = useState(0);
@@ -26,7 +33,7 @@ export default function Juego() {
       .finally(() => {
         setCargando(false);
       });
-  }, []);
+  }, [URL_API]);
 
   if (cargando) {
     return <div>Cargando preguntas...</div>;
@@ -41,6 +48,15 @@ export default function Juego() {
       <div>
         <h2>Juego terminado</h2>
         <p>Puntaje final: {puntaje}</p>
+
+        <button onClick={() => navigate("/result", {
+          state: {
+            puntaje,
+            total: preguntas.length
+          }
+        })}>
+          Ver resultados
+        </button>
       </div>
     );
   }
