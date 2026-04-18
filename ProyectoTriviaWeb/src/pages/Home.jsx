@@ -12,7 +12,7 @@ export default function Home() {
       </button>
 
       <button onClick={() => navigate("/login")}>
-        Login
+        Iniciar Sesión
       </button>
     </div>
   );
