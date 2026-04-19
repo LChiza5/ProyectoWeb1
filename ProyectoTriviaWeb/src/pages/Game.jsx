@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import QuestionCard from "../components/QuestionCard";
+import AnswerOptions from "../components/AnswerOptions";
+import ScoreBoard from "../components/ScoreBoard";
+
 
 export default function Game() {
   const location = useLocation();
@@ -77,22 +81,18 @@ export default function Game() {
   };
 
   return (
-    <div>
-      <h2>Pregunta {indiceActual + 1}</h2>
+  <div>
+    <QuestionCard
+      numero={indiceActual + 1}
+      textoPregunta={preguntaActual.question.text}
+    />
 
-      <p>{preguntaActual.question.text}</p>
+    <AnswerOptions
+      opciones={opciones}
+      manejarRespuesta={manejarRespuesta}
+    />
 
-      <ul>
-        {opciones.map((opcion, index) => (
-          <li key={index}>
-            <button onClick={() => manejarRespuesta(opcion)}>
-              {opcion}
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <p>Puntaje: {puntaje}</p>
-    </div>
-  );
+    <ScoreBoard puntaje={puntaje} />
+  </div>
+);
 }
