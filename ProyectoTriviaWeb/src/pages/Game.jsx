@@ -85,7 +85,7 @@ export default function Game() {
           className="btn btn-primary mt-3"
           onClick={() =>
             navigate("/result", {
-              state: { puntaje, total: preguntas.length },
+              state: { correct: puntaje, total: preguntas.length },
             })
           }
         >
