@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import AnswerOptions from "../components/AnswerOptions";
 import ScoreBoard from "../components/ScoreBoard";
+import Timer from "../components/Timer";
 
-// Fuera del componente: función pura, no genera re-renders
 function shuffleArray(arr) {
   const result = [...arr];
   for (let i = result.length - 1; i > 0; i--) {
@@ -29,11 +29,6 @@ export default function Game() {
   const [disabled, setDisabled] = useState(false);
   const [respuestaCorrecta, setRespuestaCorrecta] = useState(null);
 
-  // =========================
-  // FETCH PREGUNTAS
-  // El shuffle se hace UNA SOLA VEZ acá, al recibir los datos.
-  // No hay segundo effect ni segundo estado para opciones.
-  // =========================
   useEffect(() => {
     const url = `https://the-trivia-api.com/v2/questions?limit=10&categories=${categoria}&difficulty=${dificultad}`;
 
@@ -53,9 +48,7 @@ export default function Game() {
       .finally(() => setCargando(false));
   }, []); // [] porque categoria y dificultad no cambian durante el juego
 
-  // =========================
-  // ESTADÍSTICAS
-  // =========================
+  
   const totalPreguntas = preguntas.length;
   const preguntaActualNumero = indiceActual + 1;
 
@@ -67,15 +60,9 @@ export default function Game() {
     ? Math.round((puntaje / totalPreguntas) * 100)
     : 0;
 
-  // =========================
-  // LOADING / ERROR
-  // =========================
   if (cargando) return <div>Cargando preguntas...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  // =========================
-  // FIN DEL JUEGO
-  // =========================
   if (indiceActual >= preguntas.length) {
     return (
       <div className="container text-center mt-5">
@@ -99,10 +86,8 @@ export default function Game() {
 
   if (!preguntaActual) return <div>Cargando pregunta...</div>;
 
-  // =========================
-  // MANEJAR RESPUESTA
-  // =========================
   const manejarRespuesta = (respuesta) => {
+    if (disabled) return;
     setDisabled(true);
     setRespuestaCorrecta(preguntaActual.correctAnswer);
 
@@ -117,11 +102,25 @@ export default function Game() {
     }, 1200);
   };
 
+  const alTerminarTiempo = () => {
+    if (disabled) return;
+    setDisabled(true);
+    setRespuestaCorrecta(preguntaActual.correctAnswer);
+
+    setTimeout(() => {
+      setIndiceActual((prev) => prev + 1);
+      setDisabled(false);
+      setRespuestaCorrecta(null);
+    }, 1200);
+  };
+
   // =========================
   // UI
   // =========================
   return (
     <div className="container mt-4">
+      <Timer key={indiceActual} tiempoInicial={15} alTerminar={alTerminarTiempo} />
+
       <ScoreBoard
         current={preguntaActualNumero}
         total={totalPreguntas}
