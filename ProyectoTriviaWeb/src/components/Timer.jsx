@@ -6,7 +6,6 @@ export default function Timer({ tiempoInicial, alTerminar, reset }) {
   useEffect(() => {
     setTiempo(tiempoInicial);
   }, [reset, tiempoInicial]);
-
   useEffect(() => {
     if (tiempo <= 0) {
       if (alTerminar) alTerminar();
