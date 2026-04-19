@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CategoryCard from "../components/CategoryCard";
 
 export default function Category() {
   const [categoria, setCategoria] = useState("");
@@ -21,36 +22,30 @@ export default function Category() {
 
       <section className="card-custom" aria-label="Opciones de juego">
         <form onSubmit={iniciarJuego} noValidate>
-          <p className="form-group">
-            <label className="form-label" htmlFor="categoria">Categoría</label>
-            <select
+          <CategoryCard
+              label="Categoría"
               id="categoria"
-              className="form-select-custom"
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
-            >
-              <option value="">— Elegir —</option>
-              <option value="history">🏛 Historia</option>
-              <option value="science">🔬 Ciencia</option>
-              <option value="sports">⚽ Deportes</option>
-              <option value="music">🎵 Música</option>
-            </select>
-          </p>
+               options={[
+              { value: "history", label: "🏛 Historia" },
+              { value: "science", label: "🔬 Ciencia" },
+              { value: "sports", label: "⚽ Deportes" },
+              { value: "music", label: "🎵 Música" }
+            ]}
+          />
 
-          <p className="form-group">
-            <label className="form-label" htmlFor="dificultad">Dificultad</label>
-            <select
+          <CategoryCard
+              label="Dificultad"
               id="dificultad"
-              className="form-select-custom"
               value={dificultad}
               onChange={(e) => setDificultad(e.target.value)}
-            >
-              <option value="">— Elegir —</option>
-              <option value="easy">🟢 Fácil — 20s</option>
-              <option value="medium">🟡 Media — 15s</option>
-              <option value="hard">🔴 Difícil — 10s</option>
-            </select>
-          </p>
+              options={[
+              { value: "easy", label: "🟢 Fácil — 20s" },
+              { value: "medium", label: "🟡 Media — 15s" },
+              { value: "hard", label: "🔴 Difícil — 10s" }
+            ]}
+          />
 
           <button type="submit" className="btn-primary-custom">
             Comenzar juego
