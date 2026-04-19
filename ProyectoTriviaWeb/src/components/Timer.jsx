@@ -15,11 +15,22 @@ export default function Timer({ tiempoInicial, alTerminar }) {
     if (tiempo === 0 && alTerminar) {
       alTerminar();
     }
-  }, [tiempo]); 
+  }, [tiempo]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const timerClass =
+    tiempo <= 5 ? "timer timer-danger" :
+    tiempo <= 10 ? "timer timer-warning" :
+    "timer";
 
   return (
-    <div>
-      <h3>Tiempo: {tiempo}s</h3>
-    </div>
+    <output
+      className={timerClass}
+      role="timer"
+      aria-live="polite"
+      aria-label={`Tiempo restante: ${tiempo} segundos`}
+    >
+      <span aria-hidden="true">⏱</span>
+      <span>{tiempo}s</span>
+    </output>
   );
 }

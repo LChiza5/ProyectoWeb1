@@ -6,59 +6,54 @@ export default function Category() {
   const [dificultad, setDificultad] = useState("");
   const navigate = useNavigate();
 
-  const iniciarJuego = () => {
+  const iniciarJuego = (e) => {
+    e.preventDefault();
     if (!categoria || !dificultad) {
-      alert("Seleccione categoría y dificultad");
+      alert("Seleccioná categoría y dificultad");
       return;
     }
-
-    navigate("/game", {
-      state: { categoria, dificultad },
-    });
+    navigate("/game", { state: { categoria, dificultad } });
   };
 
   return (
-    <main>
-      <header>
-        <h1>Configurar Juego</h1>
-      </header>
+    <main className="category-page">
+      <h1>Configurar partida</h1>
 
-      <section>
-        <form>
-          <fieldset>
-            <legend>Selecciona una categoría</legend>
-
-            <label htmlFor="categoria">Categoría:</label>
+      <section className="card-custom" aria-label="Opciones de juego">
+        <form onSubmit={iniciarJuego} noValidate>
+          <p className="form-group">
+            <label className="form-label" htmlFor="categoria">Categoría</label>
             <select
               id="categoria"
+              className="form-select-custom"
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
             >
-              <option value="">-- Seleccionar --</option>
-              <option value="history">Historia</option>
-              <option value="science">Ciencia</option>
-              <option value="sports">Deportes</option>
-              <option value="music">Música</option>
+              <option value="">— Elegir —</option>
+              <option value="history">🏛 Historia</option>
+              <option value="science">🔬 Ciencia</option>
+              <option value="sports">⚽ Deportes</option>
+              <option value="music">🎵 Música</option>
             </select>
-          </fieldset>
-          <fieldset>
-            <legend>Selecciona dificultad</legend>
+          </p>
 
-            <label htmlFor="dificultad">Dificultad:</label>
+          <p className="form-group">
+            <label className="form-label" htmlFor="dificultad">Dificultad</label>
             <select
               id="dificultad"
+              className="form-select-custom"
               value={dificultad}
               onChange={(e) => setDificultad(e.target.value)}
             >
-              <option value="">-- Seleccionar --</option>
-              <option value="easy">Fácil</option>
-              <option value="medium">Media</option>
-              <option value="hard">Difícil</option>
+              <option value="">— Elegir —</option>
+              <option value="easy">🟢 Fácil — 20s</option>
+              <option value="medium">🟡 Media — 15s</option>
+              <option value="hard">🔴 Difícil — 10s</option>
             </select>
-          </fieldset>
+          </p>
 
-          <button type="button" onClick={iniciarJuego}>
-            Iniciar Juego
+          <button type="submit" className="btn-primary-custom">
+            Comenzar juego
           </button>
         </form>
       </section>

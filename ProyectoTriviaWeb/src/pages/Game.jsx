@@ -4,15 +4,9 @@ import QuestionCard from "../components/QuestionCard";
 import AnswerOptions from "../components/AnswerOptions";
 import ScoreBoard from "../components/ScoreBoard";
 import Timer from "../components/Timer";
-
-function shuffleArray(arr) {
-  const result = [...arr];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
+import { prepararPreguntas } from "../utils/gameHelpers";
+import { calcularPorcentaje } from "../utils/math";
+import { difficultyTime } from "../utils/difficultyTime";
 
 export default function Game() {
   const location = useLocation();
@@ -37,39 +31,26 @@ export default function Game() {
         if (!res.ok) throw new Error("Error al obtener las preguntas");
         return res.json();
       })
-      .then((data) => {
-        const preguntasConOpciones = data.map((q) => ({
-          ...q,
-          opciones: shuffleArray([...q.incorrectAnswers, q.correctAnswer]),
-        }));
-        setPreguntas(preguntasConOpciones);
-      })
+      .then((data) => setPreguntas(prepararPreguntas(data)))
       .catch((err) => setError(err.message))
       .finally(() => setCargando(false));
-  }, []); // [] porque categoria y dificultad no cambian durante el juego
+  }, []);
 
-  
   const totalPreguntas = preguntas.length;
   const preguntaActualNumero = indiceActual + 1;
+  const progresoPorcentaje = calcularPorcentaje(preguntaActualNumero, totalPreguntas);
+  const porcentajePuntaje = calcularPorcentaje(puntaje, totalPreguntas);
 
-  const progresoPorcentaje = totalPreguntas
-    ? Math.round((preguntaActualNumero / totalPreguntas) * 100)
-    : 0;
-
-  const porcentajePuntaje = totalPreguntas
-    ? Math.round((puntaje / totalPreguntas) * 100)
-    : 0;
-
-  if (cargando) return <div>Cargando preguntas...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (cargando) return <main className="game-page"><p role="status">Cargando preguntas...</p></main>;
+  if (error) return <main className="game-page"><p role="alert">Error: {error}</p></main>;
 
   if (indiceActual >= preguntas.length) {
     return (
-      <div className="container text-center mt-5">
+      <main className="game-page" style={{ textAlign: "center", justifyContent: "center" }}>
         <h2>Juego terminado</h2>
         <p>Puntaje final: {puntaje}</p>
         <button
-          className="btn btn-primary mt-3"
+          className="btn-primary-custom"
           onClick={() =>
             navigate("/result", {
               state: { correct: puntaje, total: preguntas.length },
@@ -78,13 +59,13 @@ export default function Game() {
         >
           Ver resultados
         </button>
-      </div>
+      </main>
     );
   }
 
   const preguntaActual = preguntas[indiceActual];
 
-  if (!preguntaActual) return <div>Cargando pregunta...</div>;
+  if (!preguntaActual) return <main className="game-page"><p role="status">Cargando pregunta...</p></main>;
 
   const manejarRespuesta = (respuesta) => {
     if (disabled) return;
@@ -99,7 +80,7 @@ export default function Game() {
       setIndiceActual((prev) => prev + 1);
       setDisabled(false);
       setRespuestaCorrecta(null);
-    }, 1200);
+    }, 2200);
   };
 
   const alTerminarTiempo = () => {
@@ -111,15 +92,12 @@ export default function Game() {
       setIndiceActual((prev) => prev + 1);
       setDisabled(false);
       setRespuestaCorrecta(null);
-    }, 1200);
+    }, 2200);
   };
 
-  // =========================
-  // UI
-  // =========================
   return (
-    <div className="container mt-4">
-      <Timer key={indiceActual} tiempoInicial={15} alTerminar={alTerminarTiempo} />
+    <main className="game-page">
+      <Timer key={indiceActual} tiempoInicial={difficultyTime(dificultad)} alTerminar={alTerminarTiempo} />
 
       <ScoreBoard
         current={preguntaActualNumero}
@@ -137,6 +115,6 @@ export default function Game() {
         disabled={disabled}
         correctAnswer={respuestaCorrecta}
       />
-    </div>
+    </main>
   );
 }

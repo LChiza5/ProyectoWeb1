@@ -1,45 +1,55 @@
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { calculateStats } from "../utils/calculateStats";
+
+function getEmoji(percent) {
+  if (percent === 100) return "🏆";
+  if (percent >= 70) return "🎉";
+  if (percent >= 40) return "👍";
+  return "📚";
+}
 
 export default function Result() {
   const { state } = useLocation();
+  const navigate = useNavigate();
 
-  const total = state?.total || 0;
-  const correct = state?.correct || 0;
-
-  const percent = total ? Math.round((correct / total) * 100) : 0;
+  const { correct, total, percent } = calculateStats(
+    state?.correct || 0,
+    state?.total || 0
+  );
 
   return (
-    <main className="container text-center mt-5" role="main">
-      
-      <header className="mb-4">
-        <h1>Resultados del juego</h1>
-        <p className="text-muted">
-          Resumen de tu rendimiento
-        </p>
-      </header>
+    <main className="result-page">
+      <p className="result-emoji" aria-hidden="true">{getEmoji(percent)}</p>
+      <h1>Resultado final</h1>
 
-      <section aria-label="Resumen de resultados">
-        <article className="card p-4 mt-3 shadow-sm">
-          
-          <header className="mb-3">
-            <h2 className="h4">Resumen final</h2>
-          </header>
+      <figure className="result-score-ring" aria-label={`Puntaje: ${percent}%`}>
+        <strong className="result-percent">{percent}%</strong>
+        <figcaption className="result-label">aciertos</figcaption>
+      </figure>
 
-          <ul className="list-unstyled mb-0">
-            <li><strong>Total de preguntas:</strong> {total}</li>
-            <li><strong>Respuestas correctas:</strong> {correct}</li>
-            <li><strong>Porcentaje:</strong> {percent}%</li>
-          </ul>
+      <dl className="result-detail">
+        <div className="result-row">
+          <dt>Preguntas totales</dt>
+          <dd>{total}</dd>
+        </div>
+        <div className="result-row">
+          <dt>Respuestas correctas</dt>
+          <dd>{correct}</dd>
+        </div>
+        <div className="result-row">
+          <dt>Respuestas incorrectas</dt>
+          <dd>{total - correct}</dd>
+        </div>
+      </dl>
 
-        </article>
-      </section>
-
-      <footer className="mt-4">
-        <small className="text-muted">
-          Juego de trivia completado
-        </small>
-      </footer>
-
+      <nav className="home-actions" aria-label="Continuar">
+        <button className="btn-primary-custom" onClick={() => navigate("/category")}>
+          Jugar de nuevo
+        </button>
+        <button className="btn-secondary-custom" onClick={() => navigate("/")}>
+          Ir al inicio
+        </button>
+      </nav>
     </main>
   );
 }
