@@ -26,6 +26,9 @@ export default function Category() {
 
       <section className="card-custom" aria-label="Opciones de juego">
         <form onSubmit={iniciarJuego} noValidate>
+
+            <ErrorMessage mensaje={error} />
+
           <CategoryCard
               label="Categoría"
               id="categoria"
