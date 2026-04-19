@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Category() {
   const [categoria, setCategoria] = useState("");
   const [dificultad, setDificultad] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const iniciarJuego = (e) => {
     e.preventDefault();
     if (!categoria || !dificultad) {
-      alert("Seleccioná categoría y dificultad");
+      setError("Seleccioná categoría y dificultad");
       return;
     }
+
+    setError(""); // limpiar error si todo está bien
     navigate("/game", { state: { categoria, dificultad } });
   };
 
