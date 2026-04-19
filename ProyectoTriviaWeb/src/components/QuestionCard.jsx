@@ -1,8 +1,7 @@
-export default function QuestionCard({ textoPregunta, numero }) {
+export default function QuestionCard({ textoPregunta }) {
   return (
-    <div>
-      <h2>Pregunta {numero}</h2>
-      <p>{textoPregunta}</p>
-    </div>
+    <section className="text-center my-4">
+      <h3 className="fw-bold fs-4">{textoPregunta}</h3>
+    </section>
   );
 }

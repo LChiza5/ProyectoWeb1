@@ -1,1 +1,19 @@
 /* main styles */
+.progress-bar {
+  transition: width 0.4s ease-in-out;
+}
+
+button {
+  border-radius: 18px !important;
+  font-size: 1.1rem;
+  padding: 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:disabled {
+  opacity: 0.9;
+}
