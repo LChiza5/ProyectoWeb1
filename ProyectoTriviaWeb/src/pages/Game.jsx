@@ -7,6 +7,7 @@ import Timer from "../components/Timer";
 import { prepararPreguntas } from "../utils/gameHelpers";
 import { calcularPorcentaje } from "../utils/math";
 import { difficultyTime } from "../utils/difficultyTime";
+import { traducirTexto } from "../utils/translate";
 
 export default function Game() {
   const location = useLocation();
@@ -24,16 +25,45 @@ export default function Game() {
   const [respuestaCorrecta, setRespuestaCorrecta] = useState(null);
 
   useEffect(() => {
-    const url = `https://the-trivia-api.com/v2/questions?limit=10&categories=${categoria}&difficulty=${dificultad}`;
+    const obtenerPreguntas = async () => {
+      try {
+        const url = `https://the-trivia-api.com/v2/questions?limit=10&categories=${categoria}&difficulty=${dificultad}`;
 
-    fetch(url)
-      .then((res) => {
+        const res = await fetch(url);
         if (!res.ok) throw new Error("Error al obtener las preguntas");
-        return res.json();
-      })
-      .then((data) => setPreguntas(prepararPreguntas(data)))
-      .catch((err) => setError(err.message))
-      .finally(() => setCargando(false));
+        const data = await res.json();
+
+        const preguntasTraducidas = await Promise.all(
+          data.map(async (pregunta) => {
+            const preguntaTexto = await traducirTexto(pregunta.question.text);
+
+            const respuestas = [
+              pregunta.correctAnswer,
+              ...pregunta.incorrectAnswers,
+            ];
+
+            const respuestasTraducidas = await Promise.all(
+              respuestas.map((r) => traducirTexto(r))
+            );
+
+            return {
+              ...pregunta,
+              question: { text: preguntaTexto },
+              correctAnswer: respuestasTraducidas[0],
+              incorrectAnswers: respuestasTraducidas.slice(1),
+            };
+          })
+        );
+
+        setPreguntas(prepararPreguntas(preguntasTraducidas));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    obtenerPreguntas();
   }, []);
 
   const totalPreguntas = preguntas.length;
