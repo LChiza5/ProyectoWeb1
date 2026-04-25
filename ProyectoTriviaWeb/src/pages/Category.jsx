@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 import ErrorMessage from "../components/ErrorMessage";
 
@@ -7,7 +7,10 @@ export default function Category() {
   const [categoria, setCategoria] = useState("");
   const [dificultad, setDificultad] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const [error, setError] = useState("");
+
+  const idioma = location.state?.idioma || "es";
 
   const iniciarJuego = (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ export default function Category() {
     }
 
     setError(""); // limpiar error si todo está bien
-    navigate("/game", { state: { categoria, dificultad } });
+    navigate("/game", { state: { categoria, dificultad, idioma } });
   };
 
   return (

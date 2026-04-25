@@ -8,6 +8,7 @@ import { prepararPreguntas } from "../utils/gameHelpers";
 import { calcularPorcentaje } from "../utils/math";
 import { difficultyTime } from "../utils/difficultyTime";
 import { traducirTexto } from "../utils/translate";
+import { UI } from "../utils/translations";
 
 export default function Game() {
   const location = useLocation();
@@ -15,6 +16,8 @@ export default function Game() {
 
   const categoria = location.state?.categoria || "history";
   const dificultad = location.state?.dificultad || "easy";
+  const idioma = location.state?.idioma || "es";
+  const t = UI[idioma];
 
   const [preguntas, setPreguntas] = useState([]);
   const [indiceActual, setIndiceActual] = useState(0);
@@ -35,7 +38,7 @@ export default function Game() {
 
         const preguntasTraducidas = await Promise.all(
           data.map(async (pregunta) => {
-            const preguntaTexto = await traducirTexto(pregunta.question.text);
+            const preguntaTexto = await traducirTexto(pregunta.question.text, idioma);
 
             const respuestas = [
               pregunta.correctAnswer,
@@ -43,7 +46,7 @@ export default function Game() {
             ];
 
             const respuestasTraducidas = await Promise.all(
-              respuestas.map((r) => traducirTexto(r))
+              respuestas.map((r) => traducirTexto(r, idioma))
             );
 
             return {
@@ -71,14 +74,14 @@ export default function Game() {
   const progresoPorcentaje = calcularPorcentaje(preguntaActualNumero, totalPreguntas);
   const porcentajePuntaje = calcularPorcentaje(puntaje, totalPreguntas);
 
-  if (cargando) return <main className="game-page"><p role="status">Cargando preguntas...</p></main>;
-  if (error) return <main className="game-page"><p role="alert">Error: {error}</p></main>;
+  if (cargando) return <main className="game-page"><p role="status">{t.loading}</p></main>;
+  if (error) return <main className="game-page"><p role="alert">{t.error} {error}</p></main>;
 
   if (indiceActual >= preguntas.length) {
     return (
       <main className="game-page" style={{ textAlign: "center", justifyContent: "center" }}>
-        <h2>Juego terminado</h2>
-        <p>Puntaje final: {puntaje}</p>
+        <h2>{t.gameOver}</h2>
+        <p>{t.finalScore} {puntaje}</p>
         <button
           className="btn-primary-custom"
           onClick={() =>
@@ -87,7 +90,7 @@ export default function Game() {
             })
           }
         >
-          Ver resultados
+          {t.viewResults}
         </button>
       </main>
     );
@@ -95,7 +98,7 @@ export default function Game() {
 
   const preguntaActual = preguntas[indiceActual];
 
-  if (!preguntaActual) return <main className="game-page"><p role="status">Cargando pregunta...</p></main>;
+  if (!preguntaActual) return <main className="game-page"><p role="status">{t.loadingQuestion}</p></main>;
 
   const manejarRespuesta = (respuesta) => {
     if (disabled) return;
