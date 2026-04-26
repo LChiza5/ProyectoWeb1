@@ -17,6 +17,13 @@ export default function Result() {
     state?.total || 0
   );
 
+  const mensaje = `🎯 Obtuve ${correct} de ${total} en el juego de trivia. ¿Puedes superarme? 😎`;
+
+  const compartirWhatsApp = () => {
+  const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+  };
+
   return (
     <main className="result-page">
       <p className="result-emoji" aria-hidden="true">{getEmoji(percent)}</p>
@@ -45,6 +52,9 @@ export default function Result() {
       <nav className="home-actions" aria-label="Continuar">
         <button className="btn-primary-custom" onClick={() => navigate("/category")}>
           Jugar de nuevo
+        </button>
+        <button onClick={compartirWhatsApp} className="btn-primary-custom">
+          Compartir en WhatsApp
         </button>
         <button className="btn-secondary-custom" onClick={() => navigate("/")}>
           Ir al inicio
