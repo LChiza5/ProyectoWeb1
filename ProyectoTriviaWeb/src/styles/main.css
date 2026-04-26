@@ -1,12 +1,12 @@
 /* =====================
-   LAYOUT
+   LAYOUT / PAGES
    ===================== */
 .page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  min-height: 100svh;
+  padding: 40px 20px 60px;
+  min-height: 100vh;
 }
 
 /* =====================
@@ -17,21 +17,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 60px 24px;
+  gap: 18px;
+  padding: 50px 24px 60px;
   text-align: center;
   flex: 1;
 }
 
 .home-icon {
-  font-size: 72px;
+  font-size: 80px;
   line-height: 1;
+  filter: drop-shadow(0 4px 16px rgba(109, 40, 217, 0.35));
+  animation: bounce-icon 2.5s ease-in-out infinite;
+}
+
+@keyframes bounce-icon {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
 }
 
 .home-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text);
-  max-width: 380px;
+  max-width: 340px;
+  line-height: 1.6;
 }
 
 .home-actions {
@@ -39,49 +47,59 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
-  max-width: 280px;
-  margin-top: 8px;
+  max-width: 320px;
+  margin-top: 4px;
+}
+
+.language-selector {
+  display: flex;
+  gap: 10px;
 }
 
 /* =====================
    BUTTONS
    ===================== */
 .btn-primary-custom {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #9333ea);
   color: #fff;
   border: none;
   border-radius: 14px;
   padding: 14px 28px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
   width: 100%;
+  box-shadow: 0 4px 18px rgba(109, 40, 217, 0.35);
+  transition: transform 0.15s, box-shadow 0.2s;
 }
 
 .btn-primary-custom:hover {
-  opacity: 0.88;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(109, 40, 217, 0.45);
 }
 
 .btn-primary-custom:active {
   transform: scale(0.97);
+  box-shadow: none;
 }
 
 .btn-secondary-custom {
-  background: transparent;
+  background: var(--bg-card);
   color: var(--text-h);
-  border: 1.5px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: 14px;
-  padding: 13px 28px;
+  padding: 12px 28px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.2s, transform 0.1s;
   width: 100%;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
 }
 
 .btn-secondary-custom:hover {
   border-color: var(--accent);
   color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .btn-secondary-custom:active {
@@ -89,75 +107,39 @@
 }
 
 /* =====================
-   CARD
+   CARD custom
    ===================== */
 .card-custom {
-  background: var(--bg);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 32px 28px;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   box-shadow: var(--shadow);
 }
 
 /* =====================
-   CATEGORY
+   CATEGORY PAGE
    ===================== */
 .category-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
+  padding: 40px 20px 60px;
   gap: 24px;
-}
-
-.category-page h1 {
-  margin: 0;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-
-.form-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text);
-}
-
-.form-select-custom {
-  appearance: none;
-  background: var(--code-bg);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 1rem;
-  color: var(--text-h);
-  cursor: pointer;
-  transition: border-color 0.2s;
-  width: 100%;
-}
-
-.form-select-custom:focus {
-  outline: none;
-  border-color: var(--accent);
+  min-height: 100vh;
 }
 
 /* =====================
-   GAME LAYOUT
+   GAME PAGE
    ===================== */
 .game-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 24px 20px;
-  max-width: 600px;
+  gap: 18px;
+  padding: 24px 16px 40px;
+  max-width: 640px;
   margin: 0 auto;
   width: 100%;
 }
@@ -166,200 +148,149 @@
    SCOREBOARD
    ===================== */
 .scoreboard {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.scoreboard-stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
-.scoreboard-stats strong {
-  color: var(--text-h);
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
 }
 
 .score-badge {
-  background: var(--accent-bg);
-  color: var(--accent);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background: linear-gradient(135deg, #f59e0b, #f97316) !important;
+  color: #fff !important;
 }
 
-.progress-track {
-  width: 100%;
-  height: 8px;
-  background: var(--border);
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 99px;
-  transition: width 0.4s ease-in-out;
-}
 
 /* =====================
    TIMER
    ===================== */
-.timer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-  background: var(--code-bg);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 20px;
-  transition: background 0.3s, border-color 0.3s, color 0.3s;
-}
-
-.timer-warning {
-  border-color: #f59e0b;
-  color: #d97706;
-  background: rgba(245, 158, 11, 0.08);
+@keyframes pulse-timer {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.04); }
 }
 
 .timer-danger {
-  border-color: #ef4444;
-  color: #dc2626;
-  background: rgba(239, 68, 68, 0.08);
-  animation: pulse-timer 0.8s ease-in-out infinite;
-}
-
-@keyframes pulse-timer {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  animation: pulse-timer 0.8s ease-in-out infinite !important;
 }
 
 /* =====================
    QUESTION CARD
    ===================== */
 .question-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 28px 24px;
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-.question-text {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--text-h);
-  line-height: 1.5;
-  margin: 0;
+  border-top: 4px solid var(--accent) !important;
+  background: var(--bg-card) !important;
+  transition: background 0.3s;
 }
 
 /* =====================
-   ANSWER OPTIONS
+   ANSWER BUTTONS — Kahoot colors
    ===================== */
-.answers-grid {
-  display: grid;
-  gap: 12px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.answer-a,
+.answer-b,
+.answer-c,
+.answer-d {
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
-.answers-grid li {
-  display: contents;
+.answer-a { background: linear-gradient(135deg, #e21b3c, #c41432) !important; }
+.answer-b { background: linear-gradient(135deg, #1368ce, #0d50a8) !important; }
+.answer-c { background: linear-gradient(135deg, #d89e00, #b37e00) !important; }
+.answer-d { background: linear-gradient(135deg, #26890c, #1e6e09) !important; }
+
+.answer-a:hover:not(:disabled),
+.answer-b:hover:not(:disabled),
+.answer-c:hover:not(:disabled),
+.answer-d:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
-.answer-btn {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 14px 20px;
-  font-size: 1rem;
-  color: var(--text-h);
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+.answer-a:active:not(:disabled),
+.answer-b:active:not(:disabled),
+.answer-c:active:not(:disabled),
+.answer-d:active:not(:disabled) {
+  transform: scale(0.97);
+  box-shadow: none;
 }
 
-.answer-btn:hover:not(:disabled) {
-  border-color: var(--accent);
-  background: var(--accent-bg);
+.correct-answer {
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  box-shadow: 0 0 0 3px #bbf7d0, 0 4px 16px rgba(22, 163, 74, 0.35) !important;
+  animation: pop-correct 0.3s ease;
 }
 
-.answer-btn:active:not(:disabled) {
-  transform: scale(0.98);
+.wrong-answer {
+  background: #4b5563 !important;
+  opacity: 0.65;
+  box-shadow: none !important;
 }
 
-.answer-btn:disabled {
-  cursor: default;
-  opacity: 0.9;
+@keyframes pop-correct {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
 }
 
-.answer-btn.correct {
-  border-color: #22c55e;
-  background: rgba(34, 197, 94, 0.1);
-  color: #16a34a;
-  font-weight: 600;
-}
-
-.answer-btn.incorrect {
-  border-color: var(--border);
-  background: var(--code-bg);
-  color: var(--text);
+/* Letter badge inside answer button */
+.answer-letter {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 800;
+  flex-shrink: 0;
 }
 
 /* =====================
-   RESULT
+   RESULT PAGE
    ===================== */
 .result-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
+  padding: 50px 20px 60px;
   gap: 24px;
   text-align: center;
+  min-height: 100vh;
 }
 
 .result-emoji {
-  font-size: 72px;
+  font-size: 80px;
   line-height: 1;
+  animation: bounce-icon 2s ease-in-out infinite;
 }
 
 .result-score-ring {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: var(--accent-bg);
-  border: 4px solid var(--accent);
+  border: 5px solid var(--accent);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
+  box-shadow: 0 0 0 8px var(--accent-bg), var(--shadow);
 }
 
 .result-percent {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.4rem;
+  font-weight: 800;
   color: var(--accent);
   line-height: 1;
 }
 
 .result-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .result-detail {
@@ -367,34 +298,83 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
+  margin: 0;
+  padding: 0;
 }
 
 .result-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: var(--code-bg);
+  padding: 13px 18px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.result-detail {
-  margin: 0;
+.result-row dt { color: var(--text); }
+.result-row dd { font-weight: 700; color: var(--text-h); margin: 0; }
+
+/* =====================
+   SHARE BUTTONS
+   ===================== */
+.share-btn {
+  transition: transform 0.15s, box-shadow 0.15s !important;
 }
 
-.result-detail dt {
-  color: var(--text);
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
 }
 
-.result-detail dd {
-  font-weight: 600;
+/* =====================
+   STATS PANEL
+   ===================== */
+.stats-panel {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* =====================
+   DARK MODE — Bootstrap overrides
+   ===================== */
+body.dark-mode .card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border) !important;
   color: var(--text-h);
-  margin: 0;
 }
 
-/* output element reset */
-output {
-  display: flex;
+body.dark-mode .form-select,
+body.dark-mode .form-control {
+  background-color: var(--code-bg);
+  border-color: var(--border);
+  color: var(--text-h);
 }
+
+body.dark-mode .form-select:focus,
+body.dark-mode .form-control:focus {
+  background-color: var(--code-bg);
+  border-color: var(--accent);
+  color: var(--text-h);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+body.dark-mode .alert-warning {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #fbbf24;
+}
+
+body.dark-mode .text-muted {
+  color: var(--text) !important;
+}
+
+body.dark-mode .progress {
+  background-color: var(--border);
+}
+
+/* output reset */
+output { display: flex; }

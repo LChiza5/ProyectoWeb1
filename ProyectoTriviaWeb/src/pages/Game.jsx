@@ -4,6 +4,7 @@ import QuestionCard from "../components/QuestionCard";
 import AnswerOptions from "../components/AnswerOptions";
 import ScoreBoard from "../components/ScoreBoard";
 import Timer from "../components/Timer";
+import Loader from "../components/Loader";
 import { prepararPreguntas } from "../utils/gameHelpers";
 import { calcularPorcentaje } from "../utils/math";
 import { difficultyTime } from "../utils/difficultyTime";
@@ -74,7 +75,7 @@ export default function Game() {
   const progresoPorcentaje = calcularPorcentaje(preguntaActualNumero, totalPreguntas);
   const porcentajePuntaje = calcularPorcentaje(puntaje, totalPreguntas);
 
-  if (cargando) return <main className="game-page"><p role="status">{t.loading}</p></main>;
+  if (cargando) return <main className="game-page"><Loader /></main>;
   if (error) return <main className="game-page"><p role="alert">{t.error} {error}</p></main>;
 
   if (indiceActual >= preguntas.length) {

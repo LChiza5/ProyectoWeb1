@@ -1,29 +1,30 @@
+const colores = ['answer-a', 'answer-b', 'answer-c', 'answer-d'];
+
 export default function AnswerOptions({ opciones, onSelect, disabled, correctAnswer }) {
   return (
     <section aria-label="Opciones de respuesta">
-      <ul className="answers-grid" role="list">
+      <div className="row g-3">
         {opciones.map((opcion, i) => {
-          const isCorrect = opcion === correctAnswer;
+          const esCorrecta = opcion === correctAnswer;
 
-          let className = "answer-btn";
-          if (disabled) {
-            className += isCorrect ? " correct" : " incorrect";
-          }
+          let clase = `btn btn-lg w-100 text-start d-flex align-items-center gap-2 ${colores[i]}`;
+          if (disabled && esCorrecta) clase += ' correct-answer';
+          if (disabled && !esCorrecta) clase += ' wrong-answer';
 
           return (
-            <li key={i}>
+            <div key={i} className="col-12 col-sm-6">
               <button
-                className={className}
+                className={clase}
                 onClick={() => onSelect(opcion)}
                 disabled={disabled}
-                aria-pressed={disabled && isCorrect ? true : undefined}
               >
+                <span className="answer-letter">{String.fromCharCode(65 + i)}</span>
                 {opcion}
               </button>
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </section>
   );
 }
