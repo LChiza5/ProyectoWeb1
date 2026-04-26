@@ -23,10 +23,16 @@ export default function Result() {
   const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
   };
+
+  const compartirTwitter = () => {
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+};
+
 //Enlace de Facebook funciona solo si la página está online, no funciona si solo está en local, se le coloca link temporal.
   const compartirFacebook = () => {
   const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(mensaje)}`;
-  window.open("https://google.com", "_blank");
+  window.open("https://www.facebook.com/", "_blank");
   };
 
   return (
@@ -58,15 +64,20 @@ export default function Result() {
         <button className="btn-primary-custom" onClick={() => navigate("/category")}>
           Jugar de nuevo
         </button>
+      <button className="btn-secondary-custom" onClick={() => navigate("/")}>
+          Ir al inicio
+        </button>
+        <h2>Comparte tu resultado y reta a tus amigos😎</h2>
         <button onClick={compartirWhatsApp} className="btn-primary-custom">
           Compartir en WhatsApp
+        </button>
+        <button onClick={compartirTwitter} className="btn-primary-custom">
+          Compartir en Twitter
         </button>
         <button onClick={compartirFacebook} className="btn-primary-custom">
           Compartir en Facebook
         </button>
-        <button className="btn-secondary-custom" onClick={() => navigate("/")}>
-          Ir al inicio
-        </button>
+        
       </nav>
     </main>
   );
