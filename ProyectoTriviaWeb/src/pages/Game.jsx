@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import AnswerOptions from "../components/AnswerOptions";
@@ -10,10 +10,18 @@ import { calcularPorcentaje } from "../utils/math";
 import { difficultyTime } from "../utils/difficultyTime";
 import { traducirTexto } from "../utils/translate";
 import { UI } from "../utils/translations";
+import correctSound from "../assets/sounds/correct.mp3";
+import wrongSound from "../assets/sounds/incorrect.mp3";
+import timeoutSound from "../assets/sounds/timeout.mp3";
 
 export default function Game() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // 🔊 Audios (con useRef para que no se reinicien)
+  const audioCorrecto = useRef(new Audio(correctSound));
+  const audioIncorrecto = useRef(new Audio(wrongSound));
+  const audioTiempo = useRef(new Audio(timeoutSound));
 
   const categoria = location.state?.categoria || "history";
   const dificultad = location.state?.dificultad || "easy";
@@ -99,15 +107,22 @@ export default function Game() {
 
   const preguntaActual = preguntas[indiceActual];
 
-  if (!preguntaActual) return <main className="game-page"><p role="status">{t.loadingQuestion}</p></main>;
+  if (!preguntaActual)
+    return <main className="game-page"><p role="status">{t.loadingQuestion}</p></main>;
 
+  // ✅ Manejar respuesta con sonido
   const manejarRespuesta = (respuesta) => {
     if (disabled) return;
     setDisabled(true);
     setRespuestaCorrecta(preguntaActual.correctAnswer);
 
     if (respuesta === preguntaActual.correctAnswer) {
+      audioCorrecto.current.currentTime = 0;
+      audioCorrecto.current.play();
       setPuntaje((prev) => prev + 1);
+    } else {
+      audioIncorrecto.current.currentTime = 0;
+      audioIncorrecto.current.play();
     }
 
     setTimeout(() => {
@@ -117,6 +132,7 @@ export default function Game() {
     }, 2200);
   };
 
+  // ✅ Tiempo terminado
   const alTerminarTiempo = () => {
     if (disabled) return;
     setDisabled(true);
@@ -131,7 +147,12 @@ export default function Game() {
 
   return (
     <main className="game-page">
-      <Timer key={indiceActual} tiempoInicial={difficultyTime(dificultad)} alTerminar={alTerminarTiempo} />
+      <Timer
+        key={indiceActual}
+        tiempoInicial={difficultyTime(dificultad)}
+        alTerminar={alTerminarTiempo}
+        audioTiempo={audioTiempo}
+      />
 
       <ScoreBoard
         current={preguntaActualNumero}
