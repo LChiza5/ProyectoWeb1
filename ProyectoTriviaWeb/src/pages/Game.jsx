@@ -41,6 +41,7 @@ export default function Game() {
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [respuestaCorrecta, setRespuestaCorrecta] = useState(null);
+  const [exiting, setExiting] = useState(false);
   const tiempoRestanteRef = useRef(difficultyTime(dificultad));
 
   // Musica de fondo
@@ -157,10 +158,14 @@ export default function Game() {
     }
 
     setTimeout(() => {
-      setIndiceActual((prev) => prev + 1);
-      setDisabled(false);
-      setRespuestaCorrecta(null);
-    }, 2200);
+      setExiting(true);
+      setTimeout(() => {
+        setIndiceActual((prev) => prev + 1);
+        setDisabled(false);
+        setRespuestaCorrecta(null);
+        setExiting(false);
+      }, 320);
+    }, 1800);
   };
 
   // ✅ Tiempo terminado
@@ -171,10 +176,14 @@ export default function Game() {
     setRacha(0);
 
     setTimeout(() => {
-      setIndiceActual((prev) => prev + 1);
-      setDisabled(false);
-      setRespuestaCorrecta(null);
-    }, 2200);
+      setExiting(true);
+      setTimeout(() => {
+        setIndiceActual((prev) => prev + 1);
+        setDisabled(false);
+        setRespuestaCorrecta(null);
+        setExiting(false);
+      }, 320);
+    }, 1800);
   };
 
   return (
@@ -203,7 +212,7 @@ export default function Game() {
       </button>
 
       <Timer
-        key={indiceActual}
+        key={`timer-${indiceActual}`}
         tiempoInicial={difficultyTime(dificultad)}
         alTerminar={alTerminarTiempo}
         audioTiempo={audioTiempo}
@@ -220,14 +229,17 @@ export default function Game() {
         puntuacion={puntuacion}
       />
 
-      <QuestionCard textoPregunta={preguntaActual.question.text} />
-
-      <AnswerOptions
-        opciones={preguntaActual.opciones}
-        onSelect={manejarRespuesta}
-        disabled={disabled}
-        correctAnswer={respuestaCorrecta}
-      />
+      <div key={`q-${indiceActual}`} className={`question-wrap${exiting ? " exiting" : ""}`}>
+        <QuestionCard
+          textoPregunta={preguntaActual.question.text}
+        />
+        <AnswerOptions
+          opciones={preguntaActual.opciones}
+          onSelect={manejarRespuesta}
+          disabled={disabled}
+          correctAnswer={respuestaCorrecta}
+        />
+      </div>
     </main>
   );
 }
