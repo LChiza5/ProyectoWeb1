@@ -23,7 +23,8 @@ export default function Result() {
     state?.total || 0
   );
 
-  const mensaje = `Obtuve ${correct} de ${total} en el juego de trivia. ¿Puedes superarme? Juega aquí: https://PROYECTOTRIVIA.com`;
+  const nombre = usuario || "Alguien";
+  const mensaje = `${nombre} obtuvo ${correct}/${total} en Quiztoso. ¿Podés superarlo? 🧠 Jugá aquí: ${window.location.origin}`;
 
   const compartirWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
@@ -76,7 +77,7 @@ export default function Result() {
         <button className="btn-primary-custom" onClick={() => navigate("/category")}>
           {t.playAgain}
         </button>
-        <button className="btn-secondary-custom" onClick={() => navigate("/")}>
+        <button className="btn-secondary-custom" onClick={() => navigate("/home", { state: { usuario, idioma } })}>
           {t.goHome}
         </button>
         <h2>{t.shareTitle}</h2>
