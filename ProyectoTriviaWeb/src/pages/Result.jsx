@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { calculateStats } from "../utils/calculateStats";
 import { UI } from "../utils/translations";
+import InputCard from "../components/InputCard";
 
 function getEmoji(percent) {
   if (percent === 100) return "🏆";
@@ -12,6 +13,7 @@ function getEmoji(percent) {
 export default function Result() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const usuario = state.usuario;
 
   const idioma = state?.idioma || "es";
   const t = UI[idioma];
@@ -42,7 +44,11 @@ export default function Result() {
     <main className="result-page">
       <p className="result-emoji" aria-hidden="true">{getEmoji(percent)}</p>
       <h1>{t.resultTitle}</h1>
-
+                <InputCard
+                label={t.userLabel}
+                value={usuario}
+                disabled={true}
+                />
       <figure className="result-score-ring" aria-label={`Puntaje: ${percent}%`}>
         <strong className="result-percent">{percent}%</strong>
         <figcaption className="result-label">{t.accuracy}</figcaption>

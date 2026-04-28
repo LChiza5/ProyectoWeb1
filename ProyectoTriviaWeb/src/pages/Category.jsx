@@ -4,6 +4,7 @@ import CategoryCard from "../components/CategoryCard";
 import ErrorMessage from "../components/ErrorMessage";
 import InputCard from "../components/InputCard";
 import { difficultyQuestions } from "../utils/difficultyTime";
+import { UI } from "../utils/translations";
 
 export default function Category() {
   const [categoria, setCategoria] = useState("");
@@ -14,6 +15,7 @@ export default function Category() {
   const usuario = location.state?.usuario;
 
   const idioma = location.state?.idioma || "es";
+  const t = UI[idioma];
 
   const iniciarJuego = (e) => {
     e.preventDefault();
@@ -62,8 +64,9 @@ export default function Category() {
           />
           
           <InputCard
-          value={usuario}
-          disabled={true}
+            label={t.userLabel}
+            value={usuario}
+            disabled={true}
           />
 
           <button type="submit" className="btn-primary-custom">

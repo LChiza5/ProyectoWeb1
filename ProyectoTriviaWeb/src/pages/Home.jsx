@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import InputCard from "../components/InputCard";
 import { UI } from "../utils/translations";
@@ -6,9 +6,9 @@ import { UI } from "../utils/translations";
 export default function Home() {
   const [idioma, setIdioma] = useState("es");
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState("User1");
-
+  const location = useLocation();
   const t = UI[idioma];
+  const usuario = location.state?.usuario;
 
   return (
     <main className="home-hero">
@@ -37,7 +37,7 @@ export default function Home() {
           id="usuario"
           placeholder={t.userPlaceholder}
           value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          disabled={true}
         />
         <button
           className="btn-primary-custom"

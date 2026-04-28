@@ -32,8 +32,8 @@ export default function App() {
         {darkMode ? '☀️' : '🌙'}
       </button>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/category" element={<Category />} />
         <Route path="/game" element={<Game />} />
         <Route path="/result" element={<Result />} />

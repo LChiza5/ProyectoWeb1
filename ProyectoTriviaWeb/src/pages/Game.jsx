@@ -5,6 +5,7 @@ import AnswerOptions from "../components/AnswerOptions";
 import ScoreBoard from "../components/ScoreBoard";
 import Timer from "../components/Timer";
 import Loader from "../components/Loader";
+import InputCard from "../components/InputCard";
 import { prepararPreguntas } from "../utils/gameHelpers";
 import { calcularPorcentaje } from "../utils/math";
 import { difficultyTime, difficultyQuestions } from "../utils/difficultyTime";
@@ -18,6 +19,7 @@ import backgroundMusic from "../assets/sounds/background.mp3";
 export default function Game() {
   const location = useLocation();
   const navigate = useNavigate();
+  const usuario = location.state?.usuario;
 
   // 🔊 Audios (con useRef para que no se reinicien)
   const audioCorrecto = useRef(new Audio(correctSound));
@@ -124,7 +126,7 @@ export default function Game() {
           className="btn-primary-custom"
           onClick={() =>
             navigate("/result", {
-              state: { correct: puntaje, total: preguntas.length, puntuacion, idioma },
+              state: { correct: puntaje, total: preguntas.length, puntuacion, idioma, usuario },
             })
           }
         >
@@ -188,6 +190,11 @@ export default function Game() {
 
   return (
     <main className="game-page">
+      <InputCard
+      label={t.userLabel}
+      value={usuario}
+      disabled={true}
+      />
       <button
         onClick={toggleMute}
         title={muteado ? "Activar música" : "Silenciar música"}
