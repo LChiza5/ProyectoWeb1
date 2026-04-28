@@ -13,6 +13,7 @@ import { UI } from "../utils/translations";
 import correctSound from "../assets/sounds/correct.mp3";
 import wrongSound from "../assets/sounds/incorrect.mp3";
 import timeoutSound from "../assets/sounds/timeout.mp3";
+import backgroundMusic from "../assets/sounds/background.mp3";
 
 export default function Game() {
   const location = useLocation();
@@ -22,6 +23,9 @@ export default function Game() {
   const audioCorrecto = useRef(new Audio(correctSound));
   const audioIncorrecto = useRef(new Audio(wrongSound));
   const audioTiempo = useRef(new Audio(timeoutSound));
+  const audioMusica = useRef(null);
+
+  const [muteado, setMuteado] = useState(false);
 
   const categoria = location.state?.categoria || "history";
   const dificultad = location.state?.dificultad || "easy";
@@ -35,6 +39,27 @@ export default function Game() {
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [respuestaCorrecta, setRespuestaCorrecta] = useState(null);
+
+  // Musica de fondo
+  useEffect(() => {
+    const musica = new Audio(backgroundMusic);
+    musica.loop = true;
+    musica.volume = 0.35;
+    audioMusica.current = musica;
+    musica.play().catch(() => {});
+
+    return () => {
+      musica.pause();
+      musica.currentTime = 0;
+    };
+  }, []);
+
+  const toggleMute = () => {
+    if (audioMusica.current) {
+      audioMusica.current.muted = !audioMusica.current.muted;
+      setMuteado((prev) => !prev);
+    }
+  };
 
   useEffect(() => {
     const obtenerPreguntas = async () => {
@@ -147,6 +172,29 @@ export default function Game() {
 
   return (
     <main className="game-page">
+      <button
+        onClick={toggleMute}
+        title={muteado ? "Activar música" : "Silenciar música"}
+        style={{
+          position: "fixed",
+          bottom: "1rem",
+          right: "1rem",
+          background: "rgba(255,255,255,0.15)",
+          border: "1px solid rgba(255,255,255,0.3)",
+          borderRadius: "50%",
+          width: "2.5rem",
+          height: "2.5rem",
+          cursor: "pointer",
+          fontSize: "1.2rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 999,
+        }}
+      >
+        {muteado ? "🔇" : "🔊"}
+      </button>
+
       <Timer
         key={indiceActual}
         tiempoInicial={difficultyTime(dificultad)}
