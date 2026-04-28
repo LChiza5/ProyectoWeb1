@@ -6,6 +6,7 @@ import { UI } from "../utils/translations";
 export default function Home() {
   const [idioma, setIdioma] = useState("es");
   const navigate = useNavigate();
+  const [usuario, setUsuario] = useState("User1");
 
   const t = UI[idioma];
 
@@ -35,10 +36,12 @@ export default function Home() {
           label={t.userLabel}
           id="usuario"
           placeholder={t.userPlaceholder}
+          value={usuario}
+          onChange={(e) => setUsuario(e.target.value)}
         />
         <button
           className="btn-primary-custom"
-          onClick={() => navigate("/category", { state: { idioma } })}
+          onClick={() => navigate("/category", { state: { idioma, usuario } })}
         >
           {t.playButton}
         </button>

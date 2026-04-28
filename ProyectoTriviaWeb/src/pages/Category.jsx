@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 import ErrorMessage from "../components/ErrorMessage";
+import InputCard from "../components/InputCard";
 
 export default function Category() {
   const [categoria, setCategoria] = useState("");
@@ -9,6 +10,7 @@ export default function Category() {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
+  const usuario = location.state?.usuario;
 
   const idioma = location.state?.idioma || "es";
 
@@ -20,11 +22,12 @@ export default function Category() {
     }
 
     setError(""); // limpiar error si todo está bien
-    navigate("/game", { state: { categoria, dificultad, idioma } });
+    navigate("/game", { state: { categoria, dificultad, idioma, usuario } });
   };
 
   return (
     <main className="category-page">
+      
       <h1>Configurar partida</h1>
 
       <section className="card-custom" aria-label="Opciones de juego">
@@ -55,6 +58,11 @@ export default function Category() {
               { value: "medium", label: "🟡 Media — 15s" },
               { value: "hard", label: "🔴 Difícil — 10s" }
             ]}
+          />
+          
+          <InputCard
+          value={usuario}
+          disabled={true}
           />
 
           <button type="submit" className="btn-primary-custom">

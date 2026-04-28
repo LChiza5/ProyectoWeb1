@@ -1,4 +1,4 @@
-export default function InputCard({ label, id, type = "text", value, onChange, placeholder = "" }) {
+export default function InputCard({ label, id, type = "text", value, onChange, placeholder = "", disabled = false }) {
   return (
     <div className="mb-3">
       <label className="form-label fw-bold small text-uppercase" htmlFor={id}
@@ -12,6 +12,7 @@ export default function InputCard({ label, id, type = "text", value, onChange, p
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        disabled={disabled}
       />
     </div>
   );
