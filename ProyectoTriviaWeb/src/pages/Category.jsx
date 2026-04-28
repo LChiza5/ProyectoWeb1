@@ -5,7 +5,6 @@ import ErrorMessage from "../components/ErrorMessage";
 import InputCard from "../components/InputCard";
 import { difficultyQuestions } from "../utils/difficultyTime";
 import { UI } from "../utils/translations";
-
 export default function Category() {
   const [categoria, setCategoria] = useState("");
   const [dificultad, setDificultad] = useState("");
@@ -20,49 +19,51 @@ export default function Category() {
   const iniciarJuego = (e) => {
     e.preventDefault();
     if (!categoria || !dificultad) {
-      setError("Seleccioná categoría y dificultad");
+      setError(t.categoryError);
       return;
     }
-
-    setError(""); // limpiar error si todo está bien
+    setError("");
     navigate("/game", { state: { categoria, dificultad, idioma, usuario } });
   };
 
   return (
     <main className="category-page">
-      
-      <h1>Configurar partida</h1>
+      <h1>{t.categoryTitle}</h1>
 
       <section className="card-custom" aria-label="Opciones de juego">
         <form onSubmit={iniciarJuego} noValidate>
-
-            <ErrorMessage mensaje={error} />
+          <ErrorMessage mensaje={error} />
 
           <CategoryCard
-              label="Categoría"
-              id="categoria"
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
-               options={[
-              { value: "history", label: "🏛 Historia" },
-              { value: "science", label: "🔬 Ciencia" },
-              { value: "sports", label: "⚽ Deportes" },
-              { value: "music", label: "🎵 Música" }
+            label={t.categoryLabel}
+            id="categoria"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            options={[
+              { value: "history",           label: `🏛 ${t.cat_history}` },
+              { value: "science",           label: `🔬 ${t.cat_science}` },
+              { value: "geography",         label: `🌍 ${t.cat_geography}` },
+              { value: "sports",            label: `⚽ ${t.cat_sports}` },
+              { value: "music",             label: `🎵 ${t.cat_music}` },
+              { value: "film_and_tv",       label: `🎬 ${t.cat_film}` },
+              { value: "arts_and_literature", label: `📚 ${t.cat_arts}` },
+              { value: "general_knowledge", label: `🧠 ${t.cat_general}` },
+              { value: "food_and_drink",    label: `🍕 ${t.cat_food}` },
             ]}
           />
 
           <CategoryCard
-              label="Dificultad"
-              id="dificultad"
-              value={dificultad}
-              onChange={(e) => setDificultad(e.target.value)}
-              options={[
-              { value: "easy", label: `🟢 Fácil — 20s — ${difficultyQuestions("easy")} preguntas` },
-              { value: "medium", label: `🟡 Media — 15s — ${difficultyQuestions("medium")} preguntas` },
-              { value: "hard", label: `🔴 Difícil — 10s — ${difficultyQuestions("hard")} preguntas` },
+            label={t.difficultyLabel}
+            id="dificultad"
+            value={dificultad}
+            onChange={(e) => setDificultad(e.target.value)}
+            options={[
+              { value: "easy",   label: `🟢 ${t.diff_easy}   — 20s — ${difficultyQuestions("easy")} ${t.questions}` },
+              { value: "medium", label: `🟡 ${t.diff_medium} — 15s — ${difficultyQuestions("medium")} ${t.questions}` },
+              { value: "hard",   label: `🔴 ${t.diff_hard}   — 10s — ${difficultyQuestions("hard")} ${t.questions}` },
             ]}
           />
-          
+
           <InputCard
             label={t.userLabel}
             value={usuario}
@@ -70,7 +71,7 @@ export default function Category() {
           />
 
           <button type="submit" className="btn-primary-custom">
-            Comenzar juego
+            {t.startGame}
           </button>
         </form>
       </section>

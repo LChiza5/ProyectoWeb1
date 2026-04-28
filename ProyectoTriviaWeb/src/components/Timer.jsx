@@ -3,61 +3,65 @@ import { useEffect, useState } from "react";
 export default function Timer({ tiempoInicial, alTerminar, audioTiempo, onTick }) {
   const [tiempo, setTiempo] = useState(tiempoInicial);
 
-  // cuenta regresiva y gestion de sonido últimos 5 seg
+  // Cuenta regresiva
   useEffect(() => {
     const intervalo = setInterval(() => {
       setTiempo((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
-
     return () => clearInterval(intervalo);
   }, []);
 
-  // reporta tiempo restante al padre
+  // Reporta tiempo restante al padre
   useEffect(() => {
     if (onTick) onTick(tiempo);
   }, [tiempo]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // avisa cuando llega a 0
+  // Sonido y fin de tiempo
   useEffect(() => {
-  // ⏰ Últimos 5 segundos
-  if (tiempo === 5 && audioTiempo) {
-    audioTiempo.current.currentTime = 0;
-    audioTiempo.current.play();
-  }
-
-  // ⛔ Tiempo terminado
-  if (tiempo === 0) {
-    if (audioTiempo) {
-      audioTiempo.current.pause();
+    if (tiempo === 5 && audioTiempo) {
       audioTiempo.current.currentTime = 0;
+      audioTiempo.current.play();
     }
-
-    if (alTerminar) {
-      alTerminar();
+    if (tiempo === 0) {
+      if (audioTiempo) {
+        audioTiempo.current.pause();
+        audioTiempo.current.currentTime = 0;
+      }
+      if (alTerminar) alTerminar();
     }
-  }
-}, [tiempo]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tiempo]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  let badgeClass = "badge rounded-pill fs-6 px-3 py-2 ";
+  const percent = Math.round((tiempo / tiempoInicial) * 100);
 
-  if (tiempo <= 5) {
-    badgeClass += "bg-danger timer-danger";
-  } else if (tiempo <= 10) {
-    badgeClass += "bg-warning text-dark";
+  let badgeClass = "timer-badge ";
+  let barClass = "timer-bar ";
+  if (percent <= 25) {
+    badgeClass += "timer-badge--danger";
+    barClass += "timer-bar--danger";
+  } else if (percent <= 50) {
+    badgeClass += "timer-badge--warn";
+    barClass += "timer-bar--warn";
   } else {
-    badgeClass += "bg-success";
+    badgeClass += "timer-badge--safe";
+    barClass += "timer-bar--safe";
   }
 
   return (
-    <output
-      className="d-flex justify-content-center"
+    <div
       role="timer"
       aria-live="polite"
       aria-label={`Tiempo restante: ${tiempo} segundos`}
+      className="timer-wrap"
     >
       <span className={badgeClass}>
         ⏱ {tiempo}s
       </span>
-    </output>
+      <div className="timer-bar-track">
+        <div
+          className={barClass}
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
   );
 }
