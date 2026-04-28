@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { calculateStats } from "../utils/calculateStats";
+import { UI } from "../utils/translations";
 
 function getEmoji(percent) {
   if (percent === 100) return "🏆";
@@ -12,6 +13,10 @@ export default function Result() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  const idioma = state?.idioma || "es";
+  const t = UI[idioma];
+  const puntuacion = state?.puntuacion ?? 0;
+
   const { correct, total, percent } = calculateStats(
     state?.correct || 0,
     state?.total || 0
@@ -20,64 +25,65 @@ export default function Result() {
   const mensaje = `Obtuve ${correct} de ${total} en el juego de trivia. ¿Puedes superarme? Juega aquí: https://PROYECTOTRIVIA.com`;
 
   const compartirWhatsApp = () => {
-  const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
+    const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
   };
 
   const compartirTwitter = () => {
-  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-};
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+  };
 
-//Enlace de Facebook funciona solo si la página está online, no funciona si solo está en local, se le coloca link temporal.
   const compartirFacebook = () => {
-  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(mensaje)}`;
-  window.open("https://www.facebook.com/", "_blank");
+    window.open("https://www.facebook.com/", "_blank");
   };
 
   return (
     <main className="result-page">
       <p className="result-emoji" aria-hidden="true">{getEmoji(percent)}</p>
-      <h1>Resultado final</h1>
+      <h1>{t.resultTitle}</h1>
 
       <figure className="result-score-ring" aria-label={`Puntaje: ${percent}%`}>
         <strong className="result-percent">{percent}%</strong>
-        <figcaption className="result-label">aciertos</figcaption>
+        <figcaption className="result-label">{t.accuracy}</figcaption>
       </figure>
 
       <dl className="result-detail">
         <div className="result-row">
-          <dt>Preguntas totales</dt>
+          <dt>{t.totalQuestions}</dt>
           <dd>{total}</dd>
         </div>
         <div className="result-row">
-          <dt>Respuestas correctas</dt>
+          <dt>{t.correctAnswers}</dt>
           <dd>{correct}</dd>
         </div>
         <div className="result-row">
-          <dt>Respuestas incorrectas</dt>
+          <dt>{t.incorrectAnswers}</dt>
           <dd>{total - correct}</dd>
+        </div>
+        <div className="result-row">
+          <dt>{t.bonusScore}</dt>
+          <dd>{puntuacion} pts</dd>
         </div>
       </dl>
 
       <nav className="home-actions" aria-label="Continuar">
         <button className="btn-primary-custom" onClick={() => navigate("/category")}>
-          Jugar de nuevo
+          {t.playAgain}
         </button>
-      <button className="btn-secondary-custom" onClick={() => navigate("/")}>
-          Ir al inicio
+        <button className="btn-secondary-custom" onClick={() => navigate("/")}>
+          {t.goHome}
         </button>
-        <h2>Comparte tu resultado y reta a tus amigos😎</h2>
+        <h2>{t.shareTitle}</h2>
         <button onClick={compartirWhatsApp} className="btn-primary-custom">
-          Compartir en WhatsApp
+          {t.shareWhatsApp}
         </button>
         <button onClick={compartirTwitter} className="btn-primary-custom">
-          Compartir en Twitter
+          {t.shareTwitter}
         </button>
         <button onClick={compartirFacebook} className="btn-primary-custom">
-          Compartir en Facebook
+          {t.shareFacebook}
         </button>
-        
       </nav>
     </main>
   );

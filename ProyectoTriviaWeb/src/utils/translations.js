@@ -14,6 +14,19 @@ export const UI = {
     finalScore: "Puntaje final:",
     viewResults: "Ver resultados",
     error: "Error:",
+    // Result
+    resultTitle: "Resultado final",
+    accuracy: "aciertos",
+    totalQuestions: "Preguntas totales",
+    correctAnswers: "Respuestas correctas",
+    incorrectAnswers: "Respuestas incorrectas",
+    bonusScore: "Puntuacion bonus",
+    playAgain: "Jugar de nuevo",
+    goHome: "Ir al inicio",
+    shareTitle: "Comparte tu resultado y reta a tus amigos",
+    shareWhatsApp: "Compartir en WhatsApp",
+    shareTwitter: "Compartir en Twitter",
+    shareFacebook: "Compartir en Facebook",
   },
   en: {
     // Home
@@ -28,5 +41,18 @@ export const UI = {
     finalScore: "Final score:",
     viewResults: "View results",
     error: "Error:",
+    // Result
+    resultTitle: "Final result",
+    accuracy: "accuracy",
+    totalQuestions: "Total questions",
+    correctAnswers: "Correct answers",
+    incorrectAnswers: "Incorrect answers",
+    bonusScore: "Bonus score",
+    playAgain: "Play again",
+    goHome: "Go home",
+    shareTitle: "Share your result and challenge your friends",
+    shareWhatsApp: "Share on WhatsApp",
+    shareTwitter: "Share on Twitter",
+    shareFacebook: "Share on Facebook",
   },
 };

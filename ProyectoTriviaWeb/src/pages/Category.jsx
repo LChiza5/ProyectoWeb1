@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 import ErrorMessage from "../components/ErrorMessage";
 import InputCard from "../components/InputCard";
+import { difficultyQuestions } from "../utils/difficultyTime";
 
 export default function Category() {
   const [categoria, setCategoria] = useState("");
@@ -54,9 +55,9 @@ export default function Category() {
               value={dificultad}
               onChange={(e) => setDificultad(e.target.value)}
               options={[
-              { value: "easy", label: "🟢 Fácil — 20s" },
-              { value: "medium", label: "🟡 Media — 15s" },
-              { value: "hard", label: "🔴 Difícil — 10s" }
+              { value: "easy", label: `🟢 Fácil — 20s — ${difficultyQuestions("easy")} preguntas` },
+              { value: "medium", label: `🟡 Media — 15s — ${difficultyQuestions("medium")} preguntas` },
+              { value: "hard", label: `🔴 Difícil — 10s — ${difficultyQuestions("hard")} preguntas` },
             ]}
           />
           

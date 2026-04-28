@@ -1,4 +1,4 @@
-export default function ScoreBoard({ current, total, score, progressPercent }) {
+export default function ScoreBoard({ current, total, score, progressPercent, racha, puntuacion }) {
   return (
     <section className="card shadow-sm border-0 rounded-4 p-3 scoreboard" aria-label="Estado del juego">
 
@@ -8,9 +8,21 @@ export default function ScoreBoard({ current, total, score, progressPercent }) {
           Pregunta <strong style={{ color: 'var(--text-h)' }}>{current}</strong> / <strong style={{ color: 'var(--text-h)' }}>{total}</strong>
         </span>
 
-        <span className="badge rounded-pill px-3 py-2 score-badge" aria-label={`${score} respuestas correctas`}>
-          ⭐ {score} correctas
-        </span>
+        <div className="d-flex align-items-center gap-2">
+          <span className="badge rounded-pill px-3 py-2 score-badge" aria-label={`${score} respuestas correctas`}>
+            ⭐ {score} correctas
+          </span>
+          {puntuacion > 0 && (
+            <span className="badge rounded-pill px-2 py-2" style={{ background: 'var(--accent)', color: '#fff', fontSize: '0.75rem' }}>
+              {puntuacion} pts
+            </span>
+          )}
+          {racha >= 2 && (
+            <span className="badge rounded-pill px-2 py-2 bg-warning text-dark" aria-label={`Racha de ${racha}`}>
+              🔥 {racha}
+            </span>
+          )}
+        </div>
 
         <span className="small fw-bold" style={{ color: 'var(--accent)' }}>
           {progressPercent}%

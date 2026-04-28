@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Timer({ tiempoInicial, alTerminar, audioTiempo }) {
+export default function Timer({ tiempoInicial, alTerminar, audioTiempo, onTick }) {
   const [tiempo, setTiempo] = useState(tiempoInicial);
 
   // cuenta regresiva y gestion de sonido últimos 5 seg
@@ -11,6 +11,11 @@ export default function Timer({ tiempoInicial, alTerminar, audioTiempo }) {
 
     return () => clearInterval(intervalo);
   }, []);
+
+  // reporta tiempo restante al padre
+  useEffect(() => {
+    if (onTick) onTick(tiempo);
+  }, [tiempo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // avisa cuando llega a 0
   useEffect(() => {

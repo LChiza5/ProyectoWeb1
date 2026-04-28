@@ -7,7 +7,7 @@ import Timer from "../components/Timer";
 import Loader from "../components/Loader";
 import { prepararPreguntas } from "../utils/gameHelpers";
 import { calcularPorcentaje } from "../utils/math";
-import { difficultyTime } from "../utils/difficultyTime";
+import { difficultyTime, difficultyQuestions } from "../utils/difficultyTime";
 import { traducirTexto } from "../utils/translate";
 import { UI } from "../utils/translations";
 import correctSound from "../assets/sounds/correct.mp3";
@@ -35,10 +35,13 @@ export default function Game() {
   const [preguntas, setPreguntas] = useState([]);
   const [indiceActual, setIndiceActual] = useState(0);
   const [puntaje, setPuntaje] = useState(0);
+  const [puntuacion, setPuntuacion] = useState(0);
+  const [racha, setRacha] = useState(0);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [respuestaCorrecta, setRespuestaCorrecta] = useState(null);
+  const tiempoRestanteRef = useRef(difficultyTime(dificultad));
 
   // Musica de fondo
   useEffect(() => {
@@ -64,7 +67,7 @@ export default function Game() {
   useEffect(() => {
     const obtenerPreguntas = async () => {
       try {
-        const url = `https://the-trivia-api.com/v2/questions?limit=10&categories=${categoria}&difficulty=${dificultad}`;
+        const url = `https://the-trivia-api.com/v2/questions?limit=${difficultyQuestions(dificultad)}&categories=${categoria}&difficulty=${dificultad}`;
 
         const res = await fetch(url);
         if (!res.ok) throw new Error("Error al obtener las preguntas");
@@ -120,7 +123,7 @@ export default function Game() {
           className="btn-primary-custom"
           onClick={() =>
             navigate("/result", {
-              state: { correct: puntaje, total: preguntas.length },
+              state: { correct: puntaje, total: preguntas.length, puntuacion, idioma },
             })
           }
         >
@@ -145,9 +148,12 @@ export default function Game() {
       audioCorrecto.current.currentTime = 0;
       audioCorrecto.current.play();
       setPuntaje((prev) => prev + 1);
+      setPuntuacion((prev) => prev + tiempoRestanteRef.current);
+      setRacha((prev) => prev + 1);
     } else {
       audioIncorrecto.current.currentTime = 0;
       audioIncorrecto.current.play();
+      setRacha(0);
     }
 
     setTimeout(() => {
@@ -162,6 +168,7 @@ export default function Game() {
     if (disabled) return;
     setDisabled(true);
     setRespuestaCorrecta(preguntaActual.correctAnswer);
+    setRacha(0);
 
     setTimeout(() => {
       setIndiceActual((prev) => prev + 1);
@@ -200,6 +207,7 @@ export default function Game() {
         tiempoInicial={difficultyTime(dificultad)}
         alTerminar={alTerminarTiempo}
         audioTiempo={audioTiempo}
+        onTick={(t) => { tiempoRestanteRef.current = t; }}
       />
 
       <ScoreBoard
@@ -208,6 +216,8 @@ export default function Game() {
         score={puntaje}
         progressPercent={progresoPorcentaje}
         scorePercent={porcentajePuntaje}
+        racha={racha}
+        puntuacion={puntuacion}
       />
 
       <QuestionCard textoPregunta={preguntaActual.question.text} />
