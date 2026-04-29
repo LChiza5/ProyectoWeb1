@@ -27,7 +27,7 @@ export default function Login() {
   try {
     const provider = new GithubAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    navigate("/home", { state: { usuario: result.user.displayName || result.user.email}});
+    navigate("/home", { state: { usuario: result.user.reloadUserInfo.screenName ||result.user.displayName || result.user.email}});
   } catch {
     setError("No se pudo iniciar sesión con GitHub.");
     setCargando(false);
