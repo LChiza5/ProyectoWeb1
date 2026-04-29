@@ -40,7 +40,7 @@ export default function Login() {
       <div className="login-card">
         <p className="home-icon" aria-hidden="true">🧠</p>
         <h1>Quiztoso</h1>
-        <p className="login-subtitle">Iniciá sesión para comenzar a jugar</p>
+        <p className="login-subtitle">Inicia sesión para comenzar a jugar</p>
 
         {error && (
           <p className="login-error" role="alert">{error}</p>

@@ -3,7 +3,7 @@
 export const UI = {
   es: {
     // Home
-    subtitle: "Poné a prueba tu cultura general con preguntas de todo el mundo",
+    subtitle: "Pon a prueba tú cultura general con preguntas de todo el mundo",
     userLabel: "Usuario",
     userPlaceholder: "Escriba su usuario",
     playButton: "Jugar ahora",
