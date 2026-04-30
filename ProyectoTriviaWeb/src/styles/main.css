@@ -1,6 +1,4 @@
-/* =====================
-   LAYOUT / PAGES
-   ===================== */
+/* layout general */
 .page {
   display: flex;
   flex-direction: column;
@@ -9,9 +7,7 @@
   min-height: 100vh;
 }
 
-/* =====================
-   LOGIN PAGE
-   ===================== */
+/* login */
 .login-page {
   display: flex;
   align-items: center;
@@ -90,9 +86,7 @@ body.dark-mode .login-card {
   cursor: not-allowed;
 }
 
-/* =====================
-   HOME
-   ===================== */
+/* home */
 .home-hero {
   display: flex;
   flex-direction: column;
@@ -137,9 +131,7 @@ body.dark-mode .login-card {
   gap: 10px;
 }
 
-/* =====================
-   BUTTONS
-   ===================== */
+/* botones */
 .btn-primary-custom {
   background: linear-gradient(135deg, var(--accent), #9333ea);
   color: #fff;
@@ -187,9 +179,7 @@ body.dark-mode .login-card {
   transform: scale(0.97);
 }
 
-/* =====================
-   CARD custom
-   ===================== */
+/* card */
 .card-custom {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
@@ -207,9 +197,7 @@ body.dark-mode .card-custom {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* =====================
-   CATEGORY PAGE
-   ===================== */
+/* category */
 .category-page {
   display: flex;
   flex-direction: column;
@@ -219,9 +207,7 @@ body.dark-mode .card-custom {
   min-height: 100vh;
 }
 
-/* =====================
-   GAME PAGE
-   ===================== */
+/* game */
 .game-page {
   display: flex;
   flex-direction: column;
@@ -232,9 +218,7 @@ body.dark-mode .card-custom {
   width: 100%;
 }
 
-/* =====================
-   SCOREBOARD
-   ===================== */
+/* scoreboard */
 .scoreboard {
   background: var(--bg-card) !important;
   border-color: var(--border) !important;
@@ -246,9 +230,7 @@ body.dark-mode .card-custom {
 }
 
 
-/* =====================
-   TIMER
-   ===================== */
+/* timer */
 @keyframes pulse-timer {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.85; transform: scale(1.06); }
@@ -300,9 +282,7 @@ body.dark-mode .card-custom {
 .timer-bar--warn   { background: #d97706; }
 .timer-bar--danger { background: #dc2626; }
 
-/* =====================
-   QUESTION TRANSITION
-   ===================== */
+/* transicion entre preguntas */
 @keyframes question-enter {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -323,18 +303,14 @@ body.dark-mode .card-custom {
   pointer-events: none;
 }
 
-/* =====================
-   QUESTION CARD
-   ===================== */
+/* pregunta */
 .question-card {
   border-top: 4px solid var(--accent) !important;
   background: var(--bg-card) !important;
   transition: background 0.3s;
 }
 
-/* =====================
-   ANSWER BUTTONS — Kahoot colors
-   ===================== */
+/* respuestas - estilo kahoot */
 .answer-a,
 .answer-b,
 .answer-c,
@@ -385,7 +361,7 @@ body.dark-mode .card-custom {
   100% { transform: scale(1); }
 }
 
-/* Letter badge inside answer button */
+/* letra de la opcion */
 .answer-letter {
   background: rgba(0, 0, 0, 0.22);
   border-radius: 8px;
@@ -399,9 +375,7 @@ body.dark-mode .card-custom {
   flex-shrink: 0;
 }
 
-/* =====================
-   RESULT PAGE
-   ===================== */
+/* resultado */
 .result-page {
   display: flex;
   flex-direction: column;
@@ -471,9 +445,7 @@ body.dark-mode .card-custom {
 .result-row dt { color: var(--text); }
 .result-row dd { font-weight: 700; color: var(--text-h); margin: 0; }
 
-/* =====================
-   SHARE BUTTONS
-   ===================== */
+/* compartir */
 .share-btn {
   transition: transform 0.15s, box-shadow 0.15s !important;
 }
@@ -483,17 +455,13 @@ body.dark-mode .card-custom {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* =====================
-   STATS PANEL
-   ===================== */
+/* stats */
 .stats-panel {
   background: var(--bg-card) !important;
   border-color: var(--border) !important;
 }
 
-/* =====================
-   DARK MODE — Bootstrap overrides
-   ===================== */
+/* dark mode - overrides de bootstrap */
 body.dark-mode .card {
   background-color: var(--bg-card) !important;
   border-color: var(--border) !important;

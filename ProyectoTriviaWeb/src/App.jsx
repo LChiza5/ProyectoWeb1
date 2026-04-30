@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <AudioController /> {/* 👈 AQUI VA */}
+      <AudioController />
 
       <button
         className="theme-toggle"

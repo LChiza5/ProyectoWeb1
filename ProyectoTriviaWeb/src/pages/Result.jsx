@@ -74,7 +74,7 @@ export default function Result() {
       </dl>
 
       <nav className="home-actions" aria-label="Continuar">
-        <button className="btn-primary-custom" onClick={() => navigate("/category")}>
+        <button className="btn-primary-custom" onClick={() => navigate("/category", { state: { usuario, idioma } })}>
           {t.playAgain}
         </button>
         <button className="btn-secondary-custom" onClick={() => navigate("/home", { state: { usuario, idioma } })}>

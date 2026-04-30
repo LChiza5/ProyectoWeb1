@@ -1,4 +1,3 @@
-// Traduce un texto del inglés al idioma destino usando MyMemory API (gratis, sin API key)
 // Si el idioma destino es inglés, devuelve el texto original sin hacer ninguna llamada
 export const traducirTexto = async (texto, targetLang = "es") => {
   if (targetLang === "en") return texto;

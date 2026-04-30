@@ -1,5 +1,3 @@
-// Diccionario de textos de interfaz para cada idioma
-// Agregar aquí cualquier texto nuevo que necesite traducción en la UI
 export const UI = {
   es: {
     // Home
@@ -7,7 +5,6 @@ export const UI = {
     userLabel: "Usuario",
     userPlaceholder: "Escriba su usuario",
     playButton: "Jugar ahora",
-    // Category
     categoryTitle: "Configurar partida",
     categoryLabel: "Categoría",
     difficultyLabel: "Dificultad",
@@ -26,14 +23,12 @@ export const UI = {
     diff_medium: "Media",
     diff_hard: "Difícil",
     questions: "preguntas",
-    // Game
     loading: "Cargando preguntas...",
     loadingQuestion: "Cargando pregunta...",
     gameOver: "Juego terminado",
     finalScore: "Puntaje final:",
     viewResults: "Ver resultados",
     error: "Error:",
-    // Result
     resultTitle: "Resultado final",
     accuracy: "aciertos",
     totalQuestions: "Preguntas totales",
@@ -48,12 +43,10 @@ export const UI = {
     shareFacebook: "Compartir en Facebook",
   },
   en: {
-    // Home
     subtitle: "Test your general knowledge with questions from around the world",
     userLabel: "Username",
     userPlaceholder: "Enter your username",
     playButton: "Play now",
-    // Category
     categoryTitle: "Game setup",
     categoryLabel: "Category",
     difficultyLabel: "Difficulty",
@@ -72,14 +65,12 @@ export const UI = {
     diff_medium: "Medium",
     diff_hard: "Hard",
     questions: "questions",
-    // Game
     loading: "Loading questions...",
     loadingQuestion: "Loading question...",
     gameOver: "Game over",
     finalScore: "Final score:",
     viewResults: "View results",
     error: "Error:",
-    // Result
     resultTitle: "Final result",
     accuracy: "accuracy",
     totalQuestions: "Total questions",

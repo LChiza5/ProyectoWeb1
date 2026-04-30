@@ -22,17 +22,17 @@ export default function Login() {
   };
 
   const loginGithub = async () => {
-  setCargando(true);
-  setError("");
-  try {
-    const provider = new GithubAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    navigate("/home", { state: { usuario: result.user.reloadUserInfo.screenName ||result.user.displayName || result.user.email}});
-  } catch {
-    setError("No se pudo iniciar sesión con GitHub.");
-    setCargando(false);
-  }
-};
+    setCargando(true);
+    setError("");
+    try {
+      const provider = new GithubAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      navigate("/home", { state: { usuario: result.user.reloadUserInfo.screenName || result.user.displayName || result.user.email } });
+    } catch {
+      setError("No se pudo iniciar sesión con GitHub.");
+      setCargando(false);
+    }
+  };
 
 
   return (

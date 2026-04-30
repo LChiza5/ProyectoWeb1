@@ -1,6 +1,4 @@
-/* =====================
-   CSS VARIABLES - LIGHT MODE
-   ===================== */
+/* variables light mode */
 :root {
   --bg: #f0edff;
   --bg-card: #ffffff;
@@ -22,9 +20,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* =====================
-   DARK MODE VARIABLES
-   ===================== */
+/* dark mode */
 body.dark-mode {
   --bg: #0d0b1a;
   --bg-card: #1a1633;
@@ -42,9 +38,7 @@ body.dark-mode {
   color-scheme: dark;
 }
 
-/* =====================
-   RESET & BODY
-   ===================== */
+/* reset */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -68,9 +62,7 @@ body {
   flex-direction: column;
 }
 
-/* =====================
-   TYPOGRAPHY
-   ===================== */
+/* tipografia */
 h1, h2 {
   font-weight: 700;
   color: var(--text-h);
@@ -82,9 +74,7 @@ h2 { font-size: clamp(1.2rem, 3vw, 1.6rem); }
 
 p { margin: 0; }
 
-/* =====================
-   THEME TOGGLE BUTTON
-   ===================== */
+/* boton de tema */
 .theme-toggle {
   position: fixed;
   top: 14px;

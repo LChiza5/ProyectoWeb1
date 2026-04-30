@@ -21,7 +21,6 @@ export default function Game() {
   const navigate = useNavigate();
   const usuario = location.state?.usuario;
 
-  // 🔊 Audios (con useRef para que no se reinicien)
   const audioCorrecto = useRef(new Audio(correctSound));
   const audioIncorrecto = useRef(new Audio(wrongSound));
   const audioTiempo = useRef(new Audio(timeoutSound));
@@ -46,7 +45,6 @@ export default function Game() {
   const [exiting, setExiting] = useState(false);
   const tiempoRestanteRef = useRef(difficultyTime(dificultad));
 
-  // Musica de fondo
   useEffect(() => {
     const musica = new Audio(backgroundMusic);
     musica.loop = true;
@@ -141,7 +139,6 @@ export default function Game() {
   if (!preguntaActual)
     return <main className="game-page"><p role="status">{t.loadingQuestion}</p></main>;
 
-  // ✅ Manejar respuesta con sonido
   const manejarRespuesta = (respuesta) => {
     if (disabled) return;
     setDisabled(true);
@@ -170,7 +167,6 @@ export default function Game() {
     }, 1800);
   };
 
-  // ✅ Tiempo terminado
   const alTerminarTiempo = () => {
     if (disabled) return;
     setDisabled(true);

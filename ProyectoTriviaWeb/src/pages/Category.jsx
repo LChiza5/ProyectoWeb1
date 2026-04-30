@@ -40,15 +40,15 @@ export default function Category() {
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
             options={[
-              { value: "history",           label: `🏛 ${t.cat_history}` },
-              { value: "science",           label: `🔬 ${t.cat_science}` },
-              { value: "geography",         label: `🌍 ${t.cat_geography}` },
-              { value: "sports",            label: `⚽ ${t.cat_sports}` },
-              { value: "music",             label: `🎵 ${t.cat_music}` },
-              { value: "film_and_tv",       label: `🎬 ${t.cat_film}` },
+              { value: "history", label: `🏛 ${t.cat_history}` },
+              { value: "science", label: `🔬 ${t.cat_science}` },
+              { value: "geography", label: `🌍 ${t.cat_geography}` },
+              { value: "sports", label: `⚽ ${t.cat_sports}` },
+              { value: "music", label: `🎵 ${t.cat_music}` },
+              { value: "film_and_tv", label: `🎬 ${t.cat_film}` },
               { value: "arts_and_literature", label: `📚 ${t.cat_arts}` },
               { value: "general_knowledge", label: `🧠 ${t.cat_general}` },
-              { value: "food_and_drink",    label: `🍕 ${t.cat_food}` },
+              { value: "food_and_drink", label: `🍕 ${t.cat_food}` },
             ]}
           />
 
@@ -58,9 +58,9 @@ export default function Category() {
             value={dificultad}
             onChange={(e) => setDificultad(e.target.value)}
             options={[
-              { value: "easy",   label: `🟢 ${t.diff_easy}   — 20s — ${difficultyQuestions("easy")} ${t.questions}` },
+              { value: "easy", label: `🟢 ${t.diff_easy} — 20s — ${difficultyQuestions("easy")} ${t.questions}` },
               { value: "medium", label: `🟡 ${t.diff_medium} — 15s — ${difficultyQuestions("medium")} ${t.questions}` },
-              { value: "hard",   label: `🔴 ${t.diff_hard}   — 10s — ${difficultyQuestions("hard")} ${t.questions}` },
+              { value: "hard", label: `🔴 ${t.diff_hard} — 10s — ${difficultyQuestions("hard")} ${t.questions}` },
             ]}
           />
 
